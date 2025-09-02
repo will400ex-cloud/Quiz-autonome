@@ -165,7 +165,6 @@ function finish(){
       <dt>Réussite</dt><dd>${sc.percent >= (app.config.passingScore||60) ? 'Réussi' : 'Non réussi'}</dd>
     </dl>`;
   $('#reviewList').innerHTML='';
-  if (app.config.feedbackMode!=='immediate') renderReview(sc);
 }
 
 function renderReview(sc){
@@ -240,7 +239,6 @@ function applyThemeToggle(){
 function wireEvents(){
   $('#prevBtn').addEventListener('click', goPrev);
   $('#nextBtn').addEventListener('click', goNext);
-  $('#reviewBtn').addEventListener('click', ()=>renderReview(Engine.computeScore(app.state)));
   $('#downloadBtn').addEventListener('click', downloadResults);
   $('#sendBtn').addEventListener('click', sendResults);
   $('#resetBtn').addEventListener('click', ()=>{ if(confirm('Voulez-vous vraiment effacer toutes vos réponses sauvegardées localement et recommencer le quiz à zéro ?')){ Engine.clearAll(); alert('Données locales effacées.'); } });
