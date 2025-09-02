@@ -12,8 +12,8 @@
   "shuffleOptions": true,
   "passingScore": 60,
   "sendResults": {
-    "enabled": false,
-    "endpoint": "REPLACE_WITH_APPS_SCRIPT_EXEC_URL",
+    "enabled": true,
+    "endpoint": "https://script.google.com/macros/s/AKfycbxf0LkrX3szZduzuivXPl6WfbRzg3YrnGUvnBa5aSvkdQgMRFpGkHmdX4bz0Qnrdnb7Dg/exec",
     "apiKey": ""
   },
   "quizzes": []
