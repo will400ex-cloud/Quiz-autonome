@@ -13,7 +13,7 @@
   "passingScore": 60,
   "sendResults": {
     "enabled": true,
-    "endpoint": "https://script.google.com/macros/s/AKfycbzCySxytpuQS5k7be1mXLO877vFc8U3l3sNkS4Emx1viO9RXYm4OG_9mN3S8UwvDoZJPA/exec",
+    "endpoint": "https://script.google.com/macros/s/AKfycbyTQWJlDwuI7Z20bHmkACck607eU50Umw21MI3UivI4_HtpInBB7WUUb0STCWtKyukPZg/exec",
     "apiKey": ""
   }
 }
