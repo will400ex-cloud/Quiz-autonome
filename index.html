@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz autonome — Réseaux industriels</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <h1 id="appTitle">Quiz autonome</h1>
+      <div class="mode-toggle">
+        <button id="themeToggle" aria-label="Changer le thème">🌓</button>
+      </div>
+    </header>
+
+    <main id="screenStart" class="card">
+      <h2>Démarrer le quiz</h2>
+      <p>Répondez à votre rythme. Vos réponses sont enregistrées automatiquement sur cet appareil.</p>
+      <form id="startForm" class="grid">
+        <label>
+          <span>Nom complet</span>
+          <input type="text" id="studentName" required placeholder="Nom Prénom" autocomplete="name"/>
+        </label>
+        <label>
+          <span>Identifiant (optionnel)</span>
+          <input type="text" id="studentId" placeholder="Matricule / Groupe"/>
+        </label>
+        <label>
+          <span>Quiz</span>
+          <select id="quizSelect"></select>
+        </label>
+        <div class="row">
+          <button type="submit" class="primary">Commencer</button>
+          <button type="button" id="resumeBtn" class="ghost">Reprendre une tentative</button>
+          <button type="button" id="resetBtn" class="danger ghost">Réinitialiser cet appareil</button>
+        </div>
+      </form>
+      <details class="mt">
+        <summary>Paramètres (lecture seule)</summary>
+        <pre id="configPreview" class="pre"></pre>
+      </details>
+    </main>
+
+    <section id="screenQuiz" class="hidden">
+      <div class="card">
+        <div class="header-row">
+          <div id="progressText">Question 1/1</div>
+          <div id="timer" class="timer" aria-live="polite"></div>
+        </div>
+        <div id="questionCard" class="question"></div>
+        <div class="row">
+          <button id="prevBtn" class="ghost">← Précédent</button>
+          <button id="nextBtn" class="primary">Suivant →</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screenEnd" class="hidden">
+      <div class="card">
+        <h2>Résultats</h2>
+        <p id="resultSummary"></p>
+        <div class="row">
+          <button id="reviewBtn" class="ghost">Revoir les questions</button>
+          <button id="downloadBtn" class="primary">Télécharger mes résultats</button>
+          <button id="sendBtn" class="primary" title="Envoyer au professeur (si configuré)">Envoyer</button>
+        </div>
+      </div>
+      <div id="reviewList" class="mt"></div>
+    </section>
+
+    <footer class="footer">
+      <small id="foot">© 2025 — Quiz autonome (local-first)</small>
+    </footer>
+  </div>
+
+  <script src="assets/csv-loader.js"></script>
+  <script src="assets/engine.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
