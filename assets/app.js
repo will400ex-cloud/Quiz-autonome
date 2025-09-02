@@ -59,10 +59,19 @@ async function loadConfig() {
     app.quizzes = [{ id: app.config.quizId || 'quiz', title: app.config.title || 'Quiz autonome', csv: app.config.csvPath || 'data/questions.csv' }];
   }
 
-  $('#appTitle').textContent = app.config.title || 'Quiz autonome';
-  $('#appSubtitle').textContent = app.config.subtitle || 'Répondez à votre rythme';
-  $('#foot').textContent = `© ${new Date().getFullYear()} — ${app.config.title || 'Quiz autonome'}`;
-  $('#configPreview').textContent = JSON.stringify(app.config, null, 2);
+const elTitle = $('#appTitle');
+if (elTitle) elTitle.textContent = 'Questionnaire en TGÉ';
+
+const elSubtitle = $('#appSubtitle');
+if (elSubtitle) elSubtitle.textContent = app.config.subtitle || 'Répondez à votre rythme';
+
+const elFoot = $('#foot');
+if (elFoot) elFoot.textContent = `© ${new Date().getFullYear()} — Questionnaire en TGÉ`;
+
+// Cette ligne ne fait plus rien si l’aperçu a été supprimé (pas d’erreur)
+const elCfg = $('#configPreview');
+if (elCfg) elCfg.textContent = JSON.stringify(app.config, null, 2);
+
 
   const sel = $('#quizSelect'); sel.innerHTML='';
   app.quizzes.forEach(q => { const opt=document.createElement('option'); opt.value=q.id; opt.textContent=q.title; sel.appendChild(opt); });
