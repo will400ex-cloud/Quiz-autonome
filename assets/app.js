@@ -17,20 +17,23 @@ function guessRepoInfoFromPagesURL() {
   const repo = parts.length ? parts[0] : '';
   return { owner, repo };
 }
-async function listCsvViaGitHubAPI(owner, repo, branchGuess='gh-pages') {
-  const branches = [branchGuess, 'main', 'master'];
+async function listCsvViaGitHubAPI(owner, repo, branchGuess='main') {
+  const branches = [branchGuess, 'gh-pages', 'master'];
   for (const br of branches) {
     const url = `https://api.github.com/repos/${owner}/${repo}/contents/data?ref=${br}`;
-    const res = await fetch(url, { headers: { 'Accept':'application/vnd.github.v3+json' } });
-    if (res.ok) {
+    try {
+      const res = await fetch(url, { headers: { 'Accept':'application/vnd.github.v3+json' } });
+      if (!res.ok) continue; // passe à la branche suivante sans bruit
       const items = await res.json();
-      const csvs = (items||[]).filter(it => it.type==='file' && /\.csv$/i.test(it.name))
+      const csvs = (items||[])
+        .filter(it => it.type==='file' && /\.csv$/i.test(it.name))
         .map(it => ({ id: it.name.replace(/\.csv$/i,''), title: it.name, csv: `data/${it.name}` }));
       if (csvs.length) return csvs;
-    }
+    } catch { /* ignore et continue */ }
   }
   return [];
 }
+
 
 // --- Core ---
 async function loadConfig() {
@@ -182,7 +185,17 @@ function buildPayload(){
     meta: { ua: navigator.userAgent, ts: Math.floor(Date.now()/1000) }
   };
 }
-
+function downloadResults() {
+  if (!app.state) { alert('Aucun résultat à télécharger.'); return; }
+  const blob = new Blob([JSON.stringify(buildPayload(), null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  const name = (app.state.student?.name || 'etudiant').replace(/\s+/g,'-');
+  a.href = URL.createObjectURL(blob);
+  a.download = `resultat_${app.state.quizId}_${name}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
 // --- CORS-safe sender ---
 async function sendResults() {
   const cfg = app.config.sendResults || {};
