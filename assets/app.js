@@ -165,6 +165,7 @@ function finish(){
       <dt>Réussite</dt><dd>${sc.percent >= (app.config.passingScore||60) ? 'Réussi' : 'Non réussi'}</dd>
     </dl>`;
   $('#reviewList').innerHTML='';
+  if (app.config.feedbackMode !== 'immediate') renderReview(sc);
 }
 
 function renderReview(sc){
