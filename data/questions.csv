@@ -1,2 +1,0 @@
-question,option_a,option_b,option_c,option_d,correct,time,explanation,feedback,image
-"Exemple: La couche qui gère IP ?","Couche réseau","Couche transport","Couche liaison","Couche application","A",120,"IP = couche réseau (OSI 3).","",""
