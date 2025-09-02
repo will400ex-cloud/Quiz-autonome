@@ -199,27 +199,26 @@ function downloadResults() {
 // --- CORS-safe sender ---
 async function sendResults() {
   const cfg = app.config.sendResults || {};
-  if (!cfg.enabled || !cfg.endpoint) { alert('Envoi non configuré.'); return; }
-  const payload = buildPayload();
-  if (cfg.apiKey) payload.apiKey = cfg.apiKey; // clé à vérifier côté Apps Script
-
-  // Try clean JSON first
-  try {
-    const res = await fetch(cfg.endpoint, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
-    if (!res.ok) throw new Error('HTTP '+res.status);
-    await res.json().catch(()=>({}));
-    alert('Résultats envoyés. Merci!');
+  if (!cfg.enabled || !cfg.endpoint) {
+    alert('Envoi non configuré.');
     return;
-  } catch (_) {
-    // Fallback: no-cors simple request
-    try {
-      await fetch(cfg.endpoint, { method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain'}, body: JSON.stringify(payload) });
-      alert('Résultats envoyés (mode compatible CORS). Vérifie la feuille Google pour confirmer.');
-      return;
-    } catch (err2) {
-      console.error(err2);
-      alert('Échec de l’envoi. Vérifie l’URL du Web App et redéploie-le.');
-    }
+  }
+  const payload = buildPayload();
+  // ⚠️ pas d'en-têtes customs; si tu veux une clé, ajoute-la DANS le body :
+  if (cfg.apiKey) payload.apiKey = cfg.apiKey;
+
+  try {
+    await fetch(cfg.endpoint, {
+      method: 'POST',
+      mode: 'no-cors',                  // évite toute preflight
+      headers: { 'Content-Type': 'text/plain' }, // "simple request"
+      body: JSON.stringify(payload)     // JSON envoyé comme texte
+    });
+    // Réponse "opaque": on ne peut pas la lire, c’est normal.
+    alert('Résultats envoyés (mode compatible CORS). Vérifie la feuille Google pour confirmer.');
+  } catch (err) {
+    console.error(err);
+    alert('Échec de l’envoi. Vérifie l’URL du Web App et redéploie-le.');
   }
 }
 
