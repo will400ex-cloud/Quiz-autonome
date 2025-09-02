@@ -1,18 +1,19 @@
 {
-  "quizId": "reseaux_industriels_intro_2025A",
-  "title": "Réseaux industriels — Quiz autonome",
-  "csvPath": "data/questions.csv",
-  "defaultTimeSec": 180,
-  "showTimer": true,
-  "enforceTimer": false,
-  "feedbackMode": "end",
-  "allowBack": true,
-  "shuffleQuestions": true,
-  "shuffleOptions": true,
-  "passingScore": 60,
-  "sendResults": {
-    "enabled": false,
-    "endpoint": "",
-    "apiKey": ""
-  }
+"quizId":"reseaux_industriels_intro_2025A",
+"title":"Réseaux industriels — Quiz autonome",
+"csvPath":"data/questions.csv",
+"defaultTimeSec":180,
+"showTimer":true,
+"enforceTimer":false,
+"feedbackMode":"end",
+"allowBack":true,
+"shuffleQuestions":true,
+"shuffleOptions":true,
+"passingScore":60,
+"System.Windows.Controls.TextBox : sendResults":
+   {
+   "enabled":System.Windows.Controls.TextBox : true,
+   "endpoint":"",
+   "apiKey":""
+   }
 }
