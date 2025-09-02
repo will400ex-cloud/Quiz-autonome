@@ -11,8 +11,8 @@
   "shuffleOptions": true,
   "passingScore": 60,
   "sendResults": {
-    "enabled": false,
-    "endpoint": "",
+    "enabled": true,
+    "endpoint": "https://script.google.com/macros/s/AKfycbzCySxytpuQS5k7be1mXLO877vFc8U3l3sNkS4Emx1viO9RXYm4OG_9mN3S8UwvDoZJPA/exec",
     "apiKey": ""
   }
 }
