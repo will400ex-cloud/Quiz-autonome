@@ -1,7 +1,7 @@
 {
-
-  "quizId": "reseaux_industriels_intro_2025A",
   "title": "Réseaux industriels — Quiz autonome",
+  "subtitle": "Mode auto-rythmé, sauvegarde locale et résumé final",
+  "quizId": "reseaux_industriels_intro_2025A",
   "csvPath": "data/questions.csv",
   "defaultTimeSec": 180,
   "showTimer": true,
@@ -12,8 +12,9 @@
   "shuffleOptions": true,
   "passingScore": 60,
   "sendResults": {
-    "enabled": true,
-    "endpoint": "https://script.google.com/macros/s/AKfycbylhDWRaKo0Q6Pm44iwFOn1-XghQrso_5hYoDD8dJhJZC4d8W5wqSYnfdXLAt3ppHx37A/exec",
+    "enabled": false,
+    "endpoint": "REPLACE_WITH_APPS_SCRIPT_EXEC_URL",
     "apiKey": ""
-  }
+  },
+  "quizzes": []
 }

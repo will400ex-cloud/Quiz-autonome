@@ -4,8 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Quiz autonome — Réseaux industriels</title>
-
-  <!-- Thème: appliquer le thème stocké le plus tôt possible pour éviter le flash -->
   <script>
   (() => {
     try {
@@ -13,16 +11,12 @@
       if (saved === 'dark' || saved === 'light') {
         document.documentElement.dataset.theme = saved;
       } else {
-        // défaut clair; si l'utilisateur préfère sombre, on suit
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         document.documentElement.dataset.theme = prefersDark ? 'dark' : 'light';
       }
-    } catch (_) {
-      document.documentElement.dataset.theme = 'light';
-    }
+    } catch (_) { document.documentElement.dataset.theme = 'light'; }
   })();
   </script>
-
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>

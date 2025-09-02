@@ -1,4 +1,2 @@
 question,option_a,option_b,option_c,option_d,correct,time,explanation,feedback,image
-"Quel modèle sépare les réseaux en niveaux (capteurs→MES→ERP) ?","Modèle OSI","Modèle Purdue","Modèle V","Modèle STAR","B",180,"Le modèle Purdue (ISA-95) structure l'entreprise du niveau 0 (capteurs/actionneurs) au niveau 4 (ERP).","", 
-"Sur un réseau industriel, lequel est typiquement temps réel déterministe ?","Ethernet standard","Modbus/TCP","PROFINET IRT","HTTP","C",180,"PROFINET IRT et EtherCAT sont conçus pour des contraintes temps réel strictes.","","",
-"Quel média est recommandé pour de longues distances et immunité EMI ?","Cuivre UTP cat.5e","Cuivre STP cat.6","Fibre optique","Wi‑Fi","C",180,"La fibre optique offre une très grande immunité au bruit et des liaisons longue distance.","",""
+"Exemple: La couche qui gère IP ?","Couche réseau","Couche transport","Couche liaison","Couche application","A",120,"IP = couche réseau (OSI 3).","",""
