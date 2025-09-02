@@ -226,39 +226,34 @@ async function sendResults() {
     return;
   }
   const payload = buildPayload();
-  // Si vous utilisez une clé côté Apps Script, mettez-la DANS le payload:
+
+  // ⚠️ PAS d'en-têtes custom (pas de X-API-Key en header).
+  //     Si tu veux une clé, mets-la DANS le body (payload.apiKey).
   if (cfg.apiKey) payload.apiKey = cfg.apiKey;
 
-  // 1) tentative "propre" (application/json)
+  // 1) tentative "propre" (si un jour Google autorise CORS ici)
   try {
     const res = await fetch(cfg.endpoint, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json' }, // <-- déclenche souvent un preflight
       body: JSON.stringify(payload)
     });
     if (!res.ok) throw new Error('HTTP ' + res.status);
-    // Si pas de CORS, on peut lire la réponse:
     await res.json().catch(() => ({}));
     alert('Résultats envoyés. Merci!');
     return;
-  } catch (err) {
-    // 2) fallback CORS-safe (opaque)
-    try {
-      await fetch(cfg.endpoint, {
-        method: 'POST',
-        mode: 'no-cors',                 // évite la preflight CORS
-        headers: { 'Content-Type': 'text/plain' }, // "simple request"
-        body: JSON.stringify(payload)    // on envoie quand même du JSON (texte)
-      });
-      // Réponse opaque: on ne peut pas vérifier, on l’indique à l’utilisateur
-      alert('Résultats envoyés (mode compatible CORS). Vérifiez la feuille Google pour confirmer.');
-      return;
-    } catch (err2) {
-      console.error(err2);
-      alert('Échec de l’envoi. Vérifiez l’URL du Web App et redéployez-le.');
-    }
+  } catch (_) {
+    // 2) Fallback CORS-safe : "simple request" => pas de preflight
+    await fetch(cfg.endpoint, {
+      method: 'POST',
+      mode: 'no-cors',                     // réponse opaque (on ne la lit pas)
+      headers: { 'Content-Type': 'text/plain' }, // simple request
+      body: JSON.stringify(payload)        // on envoie quand même du JSON en texte
+    });
+    alert('Résultats envoyés (mode compatible CORS). Vérifie la feuille Google pour confirmer.');
   }
 }
+
 
 
 function downloadResults() {
