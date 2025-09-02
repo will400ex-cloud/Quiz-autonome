@@ -38,19 +38,6 @@ const Engine = (() => {
     localStorage.setItem(LS_KEY(state.quizId, studentKey), JSON.stringify(state));
   }
 
-  function loadPersisted(quizId) {
-    // return list of attempts for this quiz
-    const all = [];
-    for (let i=0;i<localStorage.length;i++){
-      const k = localStorage.key(i);
-      if (k.startsWith(`quizrun:${quizId}:`)) {
-        const raw = localStorage.getItem(k);
-        try { all.push(JSON.parse(raw)); } catch {}
-      }
-    }
-    return all;
-  }
-
   function loadAttempt(quizId, student) {
     const studentKey = (student.name + '|' + (student.id||'')).trim().toLowerCase();
     const raw = localStorage.getItem(LS_KEY(quizId, studentKey));
@@ -67,5 +54,5 @@ const Engine = (() => {
     keys.forEach(k => localStorage.removeItem(k));
   }
 
-  return { createState, computeScore, persist, loadPersisted, loadAttempt, clearAll };
+  return { createState, computeScore, persist, loadAttempt, clearAll };
 })();

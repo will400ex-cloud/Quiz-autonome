@@ -4,20 +4,42 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Quiz autonome — Réseaux industriels</title>
+
+  <!-- Thème: appliquer le thème stocké le plus tôt possible pour éviter le flash -->
+  <script>
+  (() => {
+    try {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark' || saved === 'light') {
+        document.documentElement.dataset.theme = saved;
+      } else {
+        // défaut clair; si l'utilisateur préfère sombre, on suit
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.dataset.theme = prefersDark ? 'dark' : 'light';
+      }
+    } catch (_) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+  </script>
+
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
   <div class="wrap">
     <header class="topbar">
-      <h1 id="appTitle">Quiz autonome</h1>
+      <div class="title-group">
+        <h1 id="appTitle">Quiz autonome</h1>
+        <div class="subtitle" id="appSubtitle">Répondez à votre rythme</div>
+      </div>
       <div class="mode-toggle">
-        <button id="themeToggle" aria-label="Changer le thème">🌓</button>
+        <button id="themeToggle" aria-label="Changer le thème" title="Changer le thème">🌓</button>
       </div>
     </header>
 
-    <main id="screenStart" class="card">
-      <h2>Démarrer le quiz</h2>
-      <p>Répondez à votre rythme. Vos réponses sont enregistrées automatiquement sur cet appareil.</p>
+    <main id="screenStart" class="card elev">
+      <h2 class="section-title">Démarrer le quiz</h2>
+      <p class="lead">Vos réponses sont enregistrées automatiquement sur cet appareil. Vous pourrez reprendre plus tard.</p>
       <form id="startForm" class="grid">
         <label>
           <span>Nom complet</span>
@@ -27,30 +49,30 @@
           <span>Identifiant (optionnel)</span>
           <input type="text" id="studentId" placeholder="Matricule / Groupe"/>
         </label>
-        <label>
+        <label class="span-2">
           <span>Quiz</span>
           <select id="quizSelect"></select>
         </label>
-        <div class="row">
+        <div class="row span-2">
           <button type="submit" class="primary">Commencer</button>
-          <button type="button" id="resumeBtn" class="ghost">Reprendre une tentative</button>
-          <button type="button" id="resetBtn" class="danger ghost">Réinitialiser cet appareil</button>
+          <button type="button" id="resumeBtn" class="ghost">Reprendre</button>
+          <button type="button" id="resetBtn" class="danger ghost">Réinitialiser l'appareil</button>
         </div>
       </form>
       <details class="mt">
-        <summary>Paramètres (lecture seule)</summary>
+        <summary>Paramètres (aperçu)</summary>
         <pre id="configPreview" class="pre"></pre>
       </details>
     </main>
 
     <section id="screenQuiz" class="hidden">
-      <div class="card">
+      <div class="card elev">
         <div class="header-row">
-          <div id="progressText">Question 1/1</div>
+          <div id="progressText" class="badge">Question 1/1</div>
           <div id="timer" class="timer" aria-live="polite"></div>
         </div>
         <div id="questionCard" class="question"></div>
-        <div class="row">
+        <div class="row sticky-actions">
           <button id="prevBtn" class="ghost">← Précédent</button>
           <button id="nextBtn" class="primary">Suivant →</button>
         </div>
@@ -58,8 +80,8 @@
     </section>
 
     <section id="screenEnd" class="hidden">
-      <div class="card">
-        <h2>Résultats</h2>
+      <div class="card elev">
+        <h2 class="section-title">Résultats</h2>
         <p id="resultSummary"></p>
         <div class="row">
           <button id="reviewBtn" class="ghost">Revoir les questions</button>

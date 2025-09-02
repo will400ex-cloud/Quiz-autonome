@@ -19,7 +19,6 @@ const CSV = {
       }
       i++;
     }
-    // push last field/row
     row.push(field);
     if (row.length > 1 || row[0] !== '') rows.push(row);
     return rows;

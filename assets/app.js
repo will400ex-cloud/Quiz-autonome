@@ -26,13 +26,13 @@ function shuffle(arr){
 async function loadConfig() {
   const res = await fetch('data/config.json', { cache: 'no-store' });
   app.config = await res.json();
-  // Single quiz for now; could support multiple
   app.quizzes = [{
     id: app.config.quizId,
     title: app.config.title || 'Quiz autonome',
     csv: app.config.csvPath || 'data/questions.csv'
   }];
   $('#appTitle').textContent = app.config.title || 'Quiz autonome';
+  $('#appSubtitle').textContent = app.config.subtitle || 'Répondez à votre rythme';
   $('#foot').textContent = `© ${new Date().getFullYear()} — ${app.config.title || 'Quiz autonome'}`;
   $('#configPreview').textContent = JSON.stringify(app.config, null, 2);
   const sel = $('#quizSelect');
@@ -76,7 +76,6 @@ function startTimer() {
       app.state.perQuestionTime[i] += dt;
       app.state.lastTick = now;
       Engine.persist(app.state);
-      // per-question countdown (if enabled)
       const limit = app.state.questions[i].time;
       const elapsed = app.state.perQuestionTime[i];
       const remaining = Math.max(0, limit - elapsed);
@@ -110,7 +109,7 @@ function renderQuestion() {
 
   const selected = (app.state.answers[i] || '').toUpperCase();
 
-  const imgHtml = q.image ? `<img src="${q.image}" alt="" class="q-img" style="max-width:100%;border-radius:10px;border:1px solid var(--border)">` : '';
+  const imgHtml = q.image ? `<img src="${q.image}" alt="" class="q-img">` : '';
 
   $('#questionCard').innerHTML = `
     <div class="q-title">${q.question}</div>
@@ -138,7 +137,7 @@ function renderQuestion() {
       app.state.answers[i] = e.target.value;
       Engine.persist(app.state);
       if (app.config.feedbackMode === 'immediate') {
-        renderQuestion(); // refresh badges/explanation
+        renderQuestion();
       }
     });
   });
@@ -234,7 +233,7 @@ async function sendResults() {
     alert('Échec de l\'envoi ('+res.status+').');
     return;
   }
-  const data = await res.json().catch(() => ({}));
+  await res.json().catch(() => ({}));
   alert('Résultats envoyés. Merci!');
 }
 
@@ -250,10 +249,15 @@ function downloadResults() {
 }
 
 function applyThemeToggle() {
-  $('#themeToggle').addEventListener('click', () => {
-    const dark = document.documentElement.dataset.theme !== 'light';
-    if (dark) document.documentElement.dataset.theme = 'light';
-    else document.documentElement.dataset.theme = 'dark';
+  const btn = $('#themeToggle');
+  if (!btn) return;
+  const apply = (mode) => {
+    document.documentElement.dataset.theme = mode;
+    try { localStorage.setItem('theme', mode); } catch(_){}
+  };
+  btn.addEventListener('click', () => {
+    const cur = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+    apply(cur === 'dark' ? 'light' : 'dark');
   });
 }
 
