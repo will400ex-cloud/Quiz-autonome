@@ -226,16 +226,40 @@ async function sendResults() {
     return;
   }
   const payload = buildPayload();
-  const headers = { 'Content-Type': 'application/json' };
-  if (cfg.apiKey) headers['X-API-Key'] = cfg.apiKey;
-  const res = await fetch(cfg.endpoint, { method: 'POST', headers, body: JSON.stringify(payload) });
-  if (!res.ok) {
-    alert('Échec de l\'envoi ('+res.status+').');
+  // Si vous utilisez une clé côté Apps Script, mettez-la DANS le payload:
+  if (cfg.apiKey) payload.apiKey = cfg.apiKey;
+
+  // 1) tentative "propre" (application/json)
+  try {
+    const res = await fetch(cfg.endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    // Si pas de CORS, on peut lire la réponse:
+    await res.json().catch(() => ({}));
+    alert('Résultats envoyés. Merci!');
     return;
+  } catch (err) {
+    // 2) fallback CORS-safe (opaque)
+    try {
+      await fetch(cfg.endpoint, {
+        method: 'POST',
+        mode: 'no-cors',                 // évite la preflight CORS
+        headers: { 'Content-Type': 'text/plain' }, // "simple request"
+        body: JSON.stringify(payload)    // on envoie quand même du JSON (texte)
+      });
+      // Réponse opaque: on ne peut pas vérifier, on l’indique à l’utilisateur
+      alert('Résultats envoyés (mode compatible CORS). Vérifiez la feuille Google pour confirmer.');
+      return;
+    } catch (err2) {
+      console.error(err2);
+      alert('Échec de l’envoi. Vérifiez l’URL du Web App et redéployez-le.');
+    }
   }
-  await res.json().catch(() => ({}));
-  alert('Résultats envoyés. Merci!');
 }
+
 
 function downloadResults() {
   const blob = new Blob([JSON.stringify(buildPayload(), null, 2)], { type: 'application/json' });
