@@ -13,7 +13,7 @@
   "passingScore": 60,
   "sendResults": {
     "enabled": true,
-    "endpoint": "https://script.google.com/macros/s/AKfycbyI6bFs_ALvIRkH0aQFBoJjjXo7WxCq2WikJJxUN00rmtbI7ryWMUEgJuhyJwTdTMIePg/exec",
+    "endpoint": "https://script.google.com/macros/s/AKfycbwsgG11lEEJs6xdNax_TrsYt_HDTXxdper4IJOtAAydvWFlFVFanXqgNPCtzbDH42Y8ww/exec",
     "apiKey": ""
   },
   "quizzes": []
