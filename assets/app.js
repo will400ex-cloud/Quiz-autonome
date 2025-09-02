@@ -234,7 +234,7 @@ function wireEvents(){
   $('#reviewBtn').addEventListener('click', ()=>renderReview(Engine.computeScore(app.state)));
   $('#downloadBtn').addEventListener('click', downloadResults);
   $('#sendBtn').addEventListener('click', sendResults);
-  $('#resetBtn').addEventListener('click', ()=>{ if(confirm('Effacer toutes les tentatives locales sur cet appareil ?')){ Engine.clearAll(); alert('Données locales effacées.'); } });
+  $('#resetBtn').addEventListener('click', ()=>{ if(confirm('Voulez-vous vraiment effacer toutes vos réponses sauvegardées localement et recommencer le quiz à zéro ?')){ Engine.clearAll(); alert('Données locales effacées.'); } });
   $('#resumeBtn').addEventListener('click', async ()=>{
     const q=selectedQuiz(); const student=makeStudent(); if(!student.name){ alert('Entrez votre nom pour reprendre.'); return; }
     const attempt=Engine.loadAttempt(q.id, student); if(!attempt){ alert('Aucune tentative sauvegardée pour cet étudiant.'); return; }
