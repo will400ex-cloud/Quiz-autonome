@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
 "quizId":"reseaux_industriels_intro_2025A",
 "title":"Réseaux industriels — Quiz autonome",
 "csvPath":"data/questions.csv",
@@ -17,3 +18,22 @@
    "apiKey":""
    }
 }
+=======
+  "quizId": "reseaux_industriels_intro_2025A",
+  "title": "Réseaux industriels — Quiz autonome",
+  "csvPath": "data/questions.csv",
+  "defaultTimeSec": 180,
+  "showTimer": true,
+  "enforceTimer": false,
+  "feedbackMode": "end",
+  "allowBack": true,
+  "shuffleQuestions": true,
+  "shuffleOptions": true,
+  "passingScore": 60,
+  "sendResults": {
+    "enabled": true,
+    "endpoint": "https://script.google.com/macros/s/AKfycbzCySxytpuQS5k7be1mXLO877vFc8U3l3sNkS4Emx1viO9RXYm4OG_9mN3S8UwvDoZJPA/exec",
+    "apiKey": ""
+  }
+}
+>>>>>>> bd740b36dc29006ce1e8e1749e3b3cd06352abe7
